@@ -76,20 +76,23 @@ function contains(item, list, cb) {
   // contains checks if an item is present inside of the given array/list.
   // Pass true to the callback if it is, otherwise pass false.
 
-  return cb(item, list);
+  console.log(cb(item, list));
 }
 
-function check(x, y) {
-  for (let i = 0; i < y.length; i++) {
-    if (x === y[i]) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
+// Better Solution
+contains("Pencil", items, function check(x, y) {
+  return `${y.includes(x)}: ${x} is in array [${y}]`;
+});
 
-contains("word", items, check(x, y));
+///////////////////////////////
+//////// WORSE SOLUTION
+// contains("Pencil", items, function check(x, y) {
+//   if (y.includes(x)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// });
 
 ////////////////////////////////////////////////////////////
 /////////////// /* STRETCH PROBLEM */
@@ -100,4 +103,26 @@ function removeDuplicates(array, cb) {
   // removeDuplicates removes all duplicate values from the given array.
   // Pass the duplicate free array to the callback function.
   // Do not mutate the original array.
+
+  console.log(cb(array));
 }
+
+///////////////////////////////////////
+///////////// USING SETS
+
+removeDuplicates(items2, function dups(array) {
+  return [...new Set(array)];
+});
+
+///////////////////////////////////////
+///////////// USING REDUCE
+
+removeDuplicates(items2, function dups(array) {
+  let newArr = array.slice();
+  return newArr.reduce((a, b) => {
+    if (a.indexOf(b) < 0) {
+      a.push(b);
+    }
+    return a;
+  }, []);
+});
